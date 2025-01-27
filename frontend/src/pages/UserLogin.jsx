@@ -1,20 +1,39 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import axios from 'axios'
+import React, { useContext, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { SERVER_URL } from '../App'
+import { UserDataContext } from '../context/userContext'
 
 const UserLogin = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const {userData,setUserData}=useContext(UserDataContext)
+    const navigate=useNavigate()
 
-    const [userData, setUserData] = useState({})
-    const sumbitHandler = (e) => {
+    // const [user, setUser] = useState({})
+    const sumbitHandler = async(e) => {
         e.preventDefault();
-        setUserData({
-            email: email,
-            password: password
-        })
-        setEmail('')
-        setPassword('')
-        console.log(userData)
+        try{
+            const user={
+                email: email,
+                password: password
+            }
+            const response=await axios.post(`${SERVER_URL}/api/user/login`,user)
+            if(response.status===200){
+                const data=response.data
+                console.log(data)
+                setUserData(data.user)
+                localStorage.setItem('token1',data.token)
+                navigate('/home')
+
+            }
+            console.log(user)
+            setEmail('')
+            setPassword('')
+        }catch(error){
+            console.log(error)
+        }
+       
     };
     return (
         <div className=' p-7 h-screen flex flex-col justify-between '>

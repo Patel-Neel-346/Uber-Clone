@@ -60,7 +60,7 @@ module.exports.getUserProfile=async(req,res)=>{
 };
 
 module.exports.logoutUser=async(req,res)=>{
-    res.clearCookie('token');
+    res.clearCookie('token1');
     const token=req.cookies.token || req.headers.authorization.split(' ')[1];
     await BlacklistToken.create({token});
     

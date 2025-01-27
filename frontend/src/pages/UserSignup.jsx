@@ -1,26 +1,51 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-
+import React, { useContext, useState } from 'react'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { SERVER_URL } from '../App'
+import axios from 'axios'
+import { UserDataContext } from '../context/userContext'
 const UserSignup = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [firstname, setFirstname] = useState('')
     const [lastname, setLastname] = useState('')
-
-    const [userData, setUserData] = useState({})
-    const sumbitHandler = (e) => {
+    const {userData,setUserData}=useContext(UserDataContext)
+    const navigate=useNavigate()
+    // const [user, setUser] = useState({})
+    const sumbitHandler =async (e) => {
         e.preventDefault();
-        setUserData({
+       try{
+        const user={
+            fullname: {
+                firstname: firstname,
+                lastname: lastname
+            },
             email: email,
-            password: password,
-            firstname: firstname,
-            lastname: lastname
-        })
+            password: password
+        }
+        console.log(user)
+        const response=await axios.post(`${SERVER_URL}/api/user/register`,user)
+        console.log(response.data)
+        if(response.status===201){
+            // setUserData(response.da
+            // console(userData)
+            const data=response.data
+            setUserData(data.user)
+            localStorage.setItem('token1',data.token)
+
+            navigate('/home')
+
+        }
+        
+
         setEmail('')
         setPassword('')
         setFirstname('')
         setLastname('')
-        console.log(userData)
+        // console.log(userData)
+       }catch(error){
+        console.log(error)
+       }
+       
     };
     return (
         <div className=' p-7 h-screen flex flex-col justify-between '>

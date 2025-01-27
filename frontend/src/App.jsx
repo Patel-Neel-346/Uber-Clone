@@ -8,7 +8,11 @@ import UserLogin from './pages/UserLogin'
 import UserSignup from './pages/UserSignup'
 import CaptainLogin from './pages/CaptainLogin'
 import CaptainSignup from './pages/CaptainSignup'
+import Main from './pages/Main'
+import UserProtectedWrapper from './pages/UserProtectedWrapper'
+import UserLogout from './pages/UserLogout'
 
+export const SERVER_URL = import.meta.env.VITE_API_URL;
 function App() {
   
 
@@ -20,6 +24,14 @@ function App() {
         <Route path="/signup" element={<UserSignup />} />
         <Route path="/captain-login" element={<CaptainLogin />} />
         <Route path="/captain-signup" element={<CaptainSignup />} />
+        <Route path='/home' element={
+          <UserProtectedWrapper>
+            <Main/>
+          </UserProtectedWrapper>
+          }></Route>
+        <Route path='/user/logout' element={<UserProtectedWrapper>
+          <UserLogout/>
+        </UserProtectedWrapper>}></Route>
       </Routes>
     </div>
   )
