@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
-// import axios from 'axios'
+import axios from 'axios'
+import { SERVER_URL } from '../App'
 
 const CaptainSignup = () => {
 
@@ -17,26 +18,38 @@ const CaptainSignup = () => {
   const [ vehicleCapacity, setVehicleCapacity ] = useState('')
   const [ vehicleType, setVehicleType ] = useState('')
 
-
+  const {captain, setCaptain} = useContext(CaptainDataContext)
   
 
   const submitHandler = async (e) => {
     e.preventDefault()
-    const captainData = {
-      fullname: {
-        firstname: firstName,
-        lastname: lastName
-      },
-      email: email,
-      password: password,
-      vehicle: {
-        color: vehicleColor,
-        plate: vehiclePlate,
-        capacity: vehicleCapacity,
-        vehicleType: vehicleType
+    try{
+      const captainData = {
+        fullname: {
+          firstname: firstName,
+          lastname: lastName
+        },
+        email: email,
+        password: password,
+        vehicle: {
+          color: vehicleColor,
+          plate: vehiclePlate,
+          capacity: vehicleCapacity,
+          vehicleType: vehicleType
+        }
       }
+      const response=await axios.post(`${SERVER_URL}/api/captain/register`,captainData)
+      if(response.status===201){
+        const data=response.data
+        setCaptain(data.captain)
+        localStorage.setItem('token',data.token)
+        navigate('/captain-home')
+      }
+      // console.log(captainData)
+    }catch(error){
+      console.log(error)
     }
-    console.log(captainData)
+   
 
     // const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`, captainData)
 
