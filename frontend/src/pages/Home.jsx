@@ -8,7 +8,7 @@ const Home = () => {
         <img className=' w-16 ml-8' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" />
         <div className='bg-white py-5 px-10'>
             <h2 className=' text-2xl font-bold '>Get Stareted With Uber</h2>
-            <Link to={'/login'}> <button className=' w-full bg-black text-white py-3 rounded mt-2'>Continue</button> </Link>
+            <Link to={'/login'}> <button className=' w-full bg-black text-white py-3 rounded mt-2'>Continue To Next</button> </Link>
         </div>
       </div>
     </div>
