@@ -12,10 +12,12 @@ import Main from './pages/Main'
 import UserProtectedWrapper from './pages/UserProtectedWrapper'
 import UserLogout from './pages/UserLogout'
 import CaptainHome from './pages/CaptainHome'
+import CaptainProtectWrapper from './pages/CaptainProtectWrapper'
+import CaptainLogout from './pages/CaptainLogout'
 
 export const SERVER_URL = import.meta.env.VITE_API_URL;
 function App() {
-  
+
 
   return (
     <div>
@@ -27,13 +29,20 @@ function App() {
         <Route path="/captain-signup" element={<CaptainSignup />} />
         <Route path='/home' element={
           <UserProtectedWrapper>
-            <Main/>
+            <Main />
           </UserProtectedWrapper>
-          }></Route>
+        }></Route>
         <Route path='/user/logout' element={<UserProtectedWrapper>
-          <UserLogout/>
+          <UserLogout />
         </UserProtectedWrapper>}></Route>
-        <Route path='/captain-home' element={<CaptainHome/>}></Route>
+        <Route path='/captain-home' element={
+          <CaptainProtectWrapper>
+             <CaptainHome />
+          </CaptainProtectWrapper>}></Route>
+          <Route path='/captain-logout' element={
+            <CaptainProtectWrapper>
+              <CaptainLogout/>
+            </CaptainProtectWrapper>}></Route>
       </Routes>
     </div>
   )

@@ -69,7 +69,7 @@ module.exports.logoutCaptain=async (req,res)=>{
     const token=req.cookies.token || req.headers.authorization.split(' ')[1];
     await blacklist_token_model.create({token});
 
-    res.clearCookie('token1');
+    res.clearCookie('token');
 
     res.status(200).json({message:'Logged out successfully'});
 }; // Login a captain

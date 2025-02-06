@@ -1,20 +1,35 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { CaptainDataContext } from '../context/CaptainContext'
+import { SERVER_URL } from '../App'
 
 const CaptainLogin = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const {captain, setCaptain} = useContext(CaptainDataContext)
+    const navigate = useNavigate()
 
-    const [captainData, setCaptainData] = useState({})
-    const sumbitHandler = (e) => {
+    const sumbitHandler = async(e) => {
         e.preventDefault();
-        setCaptainData({
+        const captain={
             email: email,
             password: password
-        })
+        }
+        const response=await axios.post(`${SERVER_URL}/api/captain/login`,captain)
+
+        if(response.status===200){
+            const data=response.data
+            console.log(data)
+            setCaptain(data.captain)
+            localStorage.setItem('token',data.token)
+            navigate('/captain-home')
+        }
+
         setEmail('')
         setPassword('')
-        console.log(userData)
+        // console.log(userData)
     };
     return (
         <div className=' p-7 h-screen flex flex-col justify-between '>
