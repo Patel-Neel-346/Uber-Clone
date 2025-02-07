@@ -25,4 +25,5 @@ dist-ssr
 *.bak
 *.cache
 *.csproj.user
+*.dbmdl
 
