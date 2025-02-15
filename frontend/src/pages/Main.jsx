@@ -6,6 +6,8 @@ import LocationSearchPanel from '../components/LocationSearchPanel'
 import VehiclePanel from '../components/VehiclePanel'
 import ConfirmedRide from '../components/ConfirmedRide'
 import LookingForRider from '../components/LookingForRider'
+import WaitingForDriver from '../components/WaitingForDriver'
+import { use } from 'react'
 const Main = () => {
   const [pickUp, setPickUp] = React.useState('');
   const [destination, setDestination] = React.useState('');
@@ -13,11 +15,13 @@ const Main = () => {
   const [vehiclePanelOpen, setVehiclePanelOpen] = React.useState(false);
   const [confirmedRide, setConfirmedRide] = React.useState(false);
   const [lookingForRider, setLookingForRider] = React.useState(false);
+  const [waitingForDriver, setWaitingForDriver] = React.useState(false);
   
   const panelRef = React.useRef(null);
   const vechiclePanelRef = React.useRef(null);
   const confirmedRideRef = React.useRef(null);
   const lookingForRiderRef = React.useRef(null);
+  const waitingForDriverRef = React.useRef(null);
   const sumbitHandler = (e) => {
     e.preventDefault();
   }
@@ -53,6 +57,14 @@ const Main = () => {
       gsap.to(lookingForRiderRef.current, { translateY: '100%' })
     }
    },[lookingForRider])
+
+   useGSAP(function () {
+    if (waitingForDriver) {
+      gsap.to(waitingForDriverRef.current, { translateY: '0%' })
+    } else {
+      gsap.to(waitingForDriverRef.current, { translateY: '100%' })
+    }
+   },[waitingForDriver])
   return (
     <div className='h-screen relative overflow-hidden'>
       <img className=' w-16 absolute left-5 top-5  ' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" />
@@ -86,6 +98,10 @@ const Main = () => {
 
       <div ref={lookingForRiderRef}  className=' fixed w-full z-10 bottom-0 translate-y-full bg-white p-3 '>
         <LookingForRider setConfirmedRide={setConfirmedRide} setLookingForRider={setLookingForRider}  />
+      </div>
+
+      <div ref={waitingForDriverRef}  className=' fixed w-full z-10 bottom-0 translate-y-full bg-white p-3 '>
+        <WaitingForDriver  setWaitingForDriver={setWaitingForDriver}/>
       </div>
     </div>
   )
