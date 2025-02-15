@@ -7,7 +7,10 @@ const Main = () => {
   const [pickUp, setPickUp] = React.useState('');
   const [destination, setDestination] = React.useState('');
   const [panelOpen, setPanelOpen] = React.useState(false);
+  const [vehiclePanelOpen, setVehiclePanelOpen] = React.useState(false);
   const panelRef = React.useRef(null);
+  const vechiclePanelRef = React.useRef(null);
+
   const sumbitHandler = (e) => {
     e.preventDefault();
   }
@@ -19,13 +22,21 @@ const Main = () => {
        gsap.to(panelRef.current, { height: '0%',opacity:0 })
     }
   },[panelOpen])
+
+  useGSAP(function () {
+    if (vehiclePanelOpen) {
+      gsap.to(vechiclePanelRef.current, { translateY: '0%' })
+    } else {
+      gsap.to(vechiclePanelRef.current, { translateY: '100%' })
+    }
+  },[vehiclePanelOpen])
   return (
     <div className='h-screen relative overflow-hidden'>
       <img className=' w-16 absolute left-5 top-5  ' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" />
 
-      <div className=' h-screen w-screen'>
+      <div  className=' h-screen w-screen'>
         {/* image for temporary  use */}
-        <img className=' h-full w-full object-cover' src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="" />
+        <img  className=' h-full w-full object-cover' src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="" />
       </div>
       <div className='flex flex-col justify-end  h-screen absolute bottom-0 w-full '>
         <div className='h-[30%] bg-white p-5  relative'>
@@ -38,11 +49,12 @@ const Main = () => {
           </form>
         </div>
         <div ref={panelRef} className='h-0 bg-white '>
-            <LocationSearchPanel/>
+            <LocationSearchPanel setPanelOpen={setPanelOpen} setVehiclePanelOpen={setVehiclePanelOpen}/>
 
         </div>
       </div>
-      <div className=' fixed w-full z-10 bottom-0 bg-white p-3 '>
+      <div ref={vechiclePanelRef} className=' fixed w-full z-10 bottom-0 translate-y-full bg-white p-3 '>
+        <h5 className=' p-4 text-center absolute top-0 right-[3.5%] text-2xl' onClick={()=>{setVehiclePanelOpen(false)}}><i className="ri-arrow-down-wide-line"></i></h5>
         <h3 className=' text-2xl font-semibold mb-3 '>Choose a Vehicle</h3>
         <div className=' mb-3 flex active:border-2 border-black rounded-xl w-full p-3  items-center justify-between '>
           <img className=' h-12 ' src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_368,w_552/v1568134115/assets/6d/354919-18b0-45d0-a151-501ab4c4b114/original/XL.png" alt="" />
