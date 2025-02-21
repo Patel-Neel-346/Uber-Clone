@@ -35,6 +35,9 @@ const CaptainHome = () => {
       <div ref={ridePopupPanelRef} className=' fixed w-full z-10  bottom-0 bg-white p-3 '>
         <RidePop setRidePopupPanel={setRidePopupPanel}/>
       </div>
+        <div ref={ridePopupPanelRef} className=' fixed w-full z-10  bottom-0 bg-white p-3 '>
+        <RidePop setRidePopupPanel={setRidePopupPanel}/>
+      </div>
     </div>
   )
 }
