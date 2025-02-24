@@ -37,3 +37,22 @@ module.exports.getDistanceCoordinates = async (req, res) => {
         res.status(500).json({message: 'Unable to find distance and time'});
     }
 };
+
+
+module.exports.getLocationSuggestion=async(req,res)=>{  
+
+    try{
+        const error=validationResult(req);
+        if(!error.isEmpty()){
+            return res.status(400).json({errors: error.array()});
+        }
+
+        const {suggestion}=req.query;
+
+        const locationSuggestion=await mapsService.getAutoCompleteSuggestions(suggestion);
+        res.status(200).json(locationSuggestion);
+    }catch(error){
+        console.error(error);
+        res.status(500).json({message: 'Unable to find location suggestion'});
+    }
+};

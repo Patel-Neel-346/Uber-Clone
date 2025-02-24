@@ -55,3 +55,28 @@ module.exports.getDistanceTime=async(origin,destination)=>{
 
     
 };
+
+
+module.exports.getAutoCompleteSuggestions=async(suggestion)=>{
+
+    if(!suggestion){
+        throw new Error('Location  is required');
+    }
+
+    const apikey=process.env.GOOGLE_MAPS_API_KEY;
+    const url=`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${suggestion}&key=${apikey}`;
+    console.log(suggestion);
+    try{
+        const response=await axios.get(url);
+        if(response.data.status==='OK'){
+            return response.data.predictions;
+
+        }else{
+            throw new Error('Unable to find suggestions');
+        }
+    }
+    catch(error){
+        console.error(error);
+        throw error;
+    }
+}
