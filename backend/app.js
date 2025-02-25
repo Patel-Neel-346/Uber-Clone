@@ -7,7 +7,7 @@ const userRouter = require('./routes/user_routers.js')
 const cookieParser = require('cookie-parser')
 const captainRoute = require('./routes/captain_route.js')
 const Maprouter = require('./routes/maps_routes.js')
-
+const rideRouter = require('./routes/ride_routes.js')
 const app=express()
 connectDB()
 
@@ -19,6 +19,7 @@ app.use(cookieParser())
 app.use('/api/user',userRouter)
 app.use('/api/captain',captainRoute)
 app.use('/api/maps',Maprouter)
+app.use('/api/ride',rideRouter)
 
 app.get('/',(req,res)=>{
     res.send('API is running...')

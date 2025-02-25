@@ -39,11 +39,8 @@ module.exports.getDistanceTime=async(origin,destination)=>{
                 if(response.data.rows[0].elements[0].status==='ZERO_RESULTS'){
                     throw new Error('No routes found');
                 }
+                return response.data.rows[ 0 ].elements[ 0 ];
 
-                return {
-                    distance: response.data.rows[0].elements[0].distance.text,
-                    time: response.data.rows[0].elements[0].duration.text
-                }
             }else{
                 throw new Error('Unable to find distance and time');
             }

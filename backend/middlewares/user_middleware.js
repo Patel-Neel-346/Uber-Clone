@@ -5,7 +5,7 @@ const BlacklistToken=require('../models/blacklist_token_model.js');
 const captain_model = require('../models/captain_model.js');
 
 module.exports.authUser=async(req,res,next)=>{
-    const token=req.cookies.token || req.headers.authorization.split(' ')[1];
+    const token=req.cookies.token || req.headers.Authorization?.split(' ')[ 1 ];
     if(!token){
         return res.status(401).json({message:'Unauthorized'});
     }
@@ -26,7 +26,7 @@ module.exports.authUser=async(req,res,next)=>{
 };    // Authenticate user
 
 module.exports.authCaptain=async(req,res,next)=>{
-    const token=req.cookies.token || req.headers.authorization.split(' ')[1];
+    const token=req.cookies.token || req.headers.authorization?.split(' ')[1];
     if(!token){
         return res.status(401).json({message:'Unauthorized'});
     }
