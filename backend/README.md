@@ -288,3 +288,253 @@ The request body must be a JSON object containing the following fields:
     }
   ]
 }
+```
+
+## POST /api/rides/create
+
+### Description
+This endpoint is used to create a new ride.
+
+### Request Body
+The request body must be a JSON object containing the following fields:
+- `pickup` (string, required): The pickup location. Must be at least 3 characters long.
+- `destination` (string, required): The destination location. Must be at least 3 characters long.
+- `vehicleType` (string, required): The type of vehicle. Must be one of `auto`, `car`, or `moto`.
+
+### Example Request
+```json
+{
+  "pickup": "123 Main St",
+  "destination": "456 Elm St",
+  "vehicleType": "car"
+}
+```
+
+### Responses
+
+#### Success
+- **Status Code**: 201 Created
+- **Response Body**:
+  ```json
+  {
+    "ride": {
+      "_id": "ride_id_here",
+      "user": "user_id_here",
+      "pickup": "123 Main St",
+      "destination": "456 Elm St",
+      "fare": 100,
+      "status": "pending",
+      "otp": "123456"
+    }
+  }
+  ```
+
+#### Validation Errors
+- **Status Code**: 400 Bad Request
+- **Response Body**:
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "Error message here",
+        "param": "field_name",
+        "location": "body"
+      }
+    ]
+  }
+  ```
+
+### Example Error Response
+```json
+{
+  "errors": [
+    {
+      "msg": "pickup is required",
+      "param": "pickup",
+      "location": "body"
+    }
+  ]
+}
+```
+
+## GET /api/maps/get-coordinates
+
+### Description
+This endpoint is used to get the coordinates of a given address.
+
+### Query Parameters
+- `address` (string, required): The address to get coordinates for. Must be at least 3 characters long.
+
+### Example Request
+```
+GET /api/maps/get-coordinates?address=123%20Main%20St
+```
+
+### Responses
+
+#### Success
+- **Status Code**: 200 OK
+- **Response Body**:
+  ```json
+  {
+    "ltd": 37.7749,
+    "lng": -122.4194
+  }
+  ```
+
+#### Validation Errors
+- **Status Code**: 400 Bad Request
+- **Response Body**:
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "address is required",
+        "param": "address",
+        "location": "query"
+      }
+    ]
+  }
+  ```
+
+### Example Error Response
+```json
+{
+  "errors": [
+    {
+      "msg": "address is required",
+      "param": "address",
+      "location": "query"
+    }
+  ]
+}
+```
+
+## GET /api/maps/get-distance
+
+### Description
+This endpoint is used to get the distance and time between two locations.
+
+### Query Parameters
+- `origin` (string, required): The origin location. Must be at least 3 characters long.
+- `destination` (string, required): The destination location. Must be at least 3 characters long.
+
+### Example Request
+```
+GET /api/maps/get-distance?origin=123%20Main%20St&destination=456%20Elm%20St
+```
+
+### Responses
+
+#### Success
+- **Status Code**: 200 OK
+- **Response Body**:
+  ```json
+  {
+    "distance": {
+      "text": "5.6 km",
+      "value": 5600
+    },
+    "duration": {
+      "text": "15 mins",
+      "value": 900
+    }
+  }
+  ```
+
+#### Validation Errors
+- **Status Code**: 400 Bad Request
+- **Response Body**:
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "origin is required",
+        "param": "origin",
+        "location": "query"
+      },
+      {
+        "msg": "destination is required",
+        "param": "destination",
+        "location": "query"
+      }
+    ]
+  }
+  ```
+
+### Example Error Response
+```json
+{
+  "errors": [
+    {
+      "msg": "origin is required",
+      "param": "origin",
+      "location": "query"
+    },
+    {
+      "msg": "destination is required",
+      "param": "destination",
+      "location": "query"
+    }
+  ]
+}
+```
+
+## GET /api/maps/get-suggestion
+
+### Description
+This endpoint is used to get location suggestions based on a query.
+
+### Query Parameters
+- `suggestion` (string, required): The query for location suggestions. Must be at least 3 characters long.
+
+### Example Request
+```
+GET /api/maps/get-suggestion?suggestion=Main
+```
+
+### Responses
+
+#### Success
+- **Status Code**: 200 OK
+- **Response Body**:
+  ```json
+  [
+    {
+      "description": "Main St, San Francisco, CA, USA",
+      "place_id": "ChIJd_Y0eVIvkIARuQyDN0F1LBA"
+    },
+    {
+      "description": "Main St, Los Angeles, CA, USA",
+      "place_id": "ChIJd_Y0eVIvkIARuQyDN0F1LBB"
+    }
+  ]
+  ```
+
+#### Validation Errors
+- **Status Code**: 400 Bad Request
+- **Response Body**:
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "suggestion is required",
+        "param": "suggestion",
+        "location": "query"
+      }
+    ]
+  }
+  ```
+
+### Example Error Response
+```json
+{
+  "errors": [
+    {
+      "msg": "suggestion is required",
+      "param": "suggestion",
+      "location": "query"
+    }
+  ]
+}
+```
