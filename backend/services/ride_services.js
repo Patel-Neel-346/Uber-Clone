@@ -60,6 +60,7 @@ module.exports.CreateRide=async({
         user,
         pickup,
         destination,
+        otp:getOTP(6),
         fare:fare[vehicleType],
     });
 
