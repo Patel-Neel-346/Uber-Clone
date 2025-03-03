@@ -16,7 +16,7 @@ const ConfirmedRide = (props) => {
                 <div>
                     <h3 className='text-lg font-medium'>562/11-A</h3>
                     {/* <p className='text-sm -mt-1 text-gray-600'>{props.pickup}</p> */}
-                    <p className='text-sm -mt-1 text-gray-600'>123 Maple Street, Springfield, IL 62704, USA</p>
+                    <p className='text-sm -mt-1 text-gray-600'>{props.pickUp} </p>
 
                 </div>
             </div>
@@ -25,7 +25,7 @@ const ConfirmedRide = (props) => {
                 <div>
                     <h3 className='text-lg font-medium'>562/11-A</h3>
                     {/* <p className='text-sm -mt-1 text-gray-600'>{props.destination}</p> */}
-                    <p className='text-sm -mt-1 text-gray-600'>45 Baker Street, London W1U 8EW, United Kingdom</p>
+                    <p className='text-sm -mt-1 text-gray-600'>{props.destination}</p>
 
                 </div>
             </div>
@@ -33,9 +33,9 @@ const ConfirmedRide = (props) => {
                 <i className="ri-currency-line"></i>
                 <div>
                     {/* <h3 className='text-lg font-medium'>₹{props.fare[ props.vehicleType ]}</h3> */}
-                    <h3 className='text-lg font-medium'>100</h3>
+                    <h3 className='text-lg font-medium'>₹{props.fare[props.vehicleType]}</h3>
 
-                    <p className='text-sm -mt-1 text-gray-600'>Cash</p>
+                    <p className='text-sm -mt-1 text-gray-600'>Cash Cash</p>
                 </div>
             </div>
         </div>
@@ -45,6 +45,7 @@ const ConfirmedRide = (props) => {
             // props.createRide()
             props.setConfirmedRide(false)
             props.setLookingForRider(true)
+            props.CreateRide()
         }} className='w-full mt-5 bg-green-600 text-white font-semibold p-2 rounded-lg'>Confirm</button>
     </div>
 </div>

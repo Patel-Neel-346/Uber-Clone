@@ -12,5 +12,6 @@ router.get('/get-coordinates',query('address').isString().isLength({min:3}),auth
 router.get('/get-distance',query('origin').isString().isLength({min:3}),query('destination').isString().isLength({min:3}),authUser,getDistanceCoordinates)
 
 
-router.get('/get-suggestion',query('suggestion').isString().isLength({min:3}),getLocationSuggestion)
+router.get('/get-suggestion',query('suggestion').isString().isLength({min:3}),authUser,getLocationSuggestion)
+
 module.exports=router
