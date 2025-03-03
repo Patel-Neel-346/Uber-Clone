@@ -28,14 +28,14 @@ module.exports.authUser=async(req,res,next)=>{
 };    // Authenticate user
 
 module.exports.authCaptain=async(req,res,next)=>{
-    const token=req.cookies.token || req.headers.authorization?.split(' ')[1];
+    const token=req.cookies.token || req.header('Authorization').replace('Bearer ', '');
     if(!token){
         return res.status(401).json({message:'Unauthorized'});
     }
 
     const isBlacklisted=await BlacklistToken.findOne({token:token});
 
-    if(!isBlacklisted){
+    if(isBlacklisted){
         return res.status(401).json({message:'Unauthorized'});
     }
 

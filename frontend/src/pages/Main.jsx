@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useGSAP } from "@gsap/react"
 import gsap from 'gsap'
 import 'remixicon/fonts/remixicon.css'
@@ -10,6 +10,8 @@ import WaitingForDriver from '../components/WaitingForDriver'
 import { use } from 'react'
 import axios from 'axios'
 import { SERVER_URL } from '../App'
+import { UserDataContext } from '../context/userContext'
+import { SocketContext } from '../context/SocketContext'
 const Main = () => {
   const [pickUp, setPickUp] = React.useState('');
   const [destination, setDestination] = React.useState('');
@@ -33,6 +35,14 @@ const Main = () => {
   const waitingForDriverRef = React.useRef(null);
 
 
+  const {userData}=useContext(UserDataContext)
+  const {socket}=useContext(SocketContext)
+
+
+  useEffect(()=>{
+    console.log(userData)
+    socket.emit("join",{userType:'user',userId:userData.user._id})
+  },[userData])
 
 
   const sumbitHandler = (e) => {
