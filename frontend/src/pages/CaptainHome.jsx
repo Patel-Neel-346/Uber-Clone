@@ -18,11 +18,30 @@ const CaptainHome = () => {
   const {socket}=useContext(SocketContext)
 
   useEffect(()=>{
-    console.log(captain)
     socket.emit('join',{
       userType:'captain',userId:captain._id
     })
-  },[captain])
+
+
+    const updateLocation=()=>{
+      console.log('Location Update')
+      if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(position=>{
+          socket.emit('update-location-captain',{
+            userId:captain._id,
+            location:{
+              ltd:position.coords.latitude,
+              lng:position.coords.longitude
+            }
+          })
+        })
+      }
+    }
+
+    setInterval(updateLocation, 10000);
+    // updateLocation()
+
+  },[])
 
   useGSAP(function () {
     if (ridePopupPanel) {
