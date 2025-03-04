@@ -8,10 +8,12 @@ import ConfirmRidePop from '../components/ConfirmRidePop'
 import { CaptainDataContext } from '../context/CaptainContext'
 import { SocketContext } from '../context/SocketContext'
 const CaptainHome = () => {
-  const [ridePopupPanel, setRidePopupPanel] = React.useState(true)
+  const [ridePopupPanel, setRidePopupPanel] = React.useState(false)
   const [ConfirmridePopupPanel, setConfirmRidePopupPanel] = React.useState(false)
-  const ConfirmridePopupPanelRef = React.useRef(null)
 
+  const [ride,setRide]=React.useState(null)
+
+  const ConfirmridePopupPanelRef = React.useRef(null)
   const ridePopupPanelRef = React.useRef(null)
 
   const {captain}=useContext(CaptainDataContext)
@@ -42,6 +44,12 @@ const CaptainHome = () => {
     // updateLocation()
 
   },[])
+
+  socket.on('new-ride',(data)=>{
+    console.log(data)
+    setRide(data)
+    setRidePopupPanel(true)
+  })
 
   useGSAP(function () {
     if (ridePopupPanel) {
@@ -75,7 +83,10 @@ const CaptainHome = () => {
        <CaptainDetails />
       </div>
       <div ref={ridePopupPanelRef} className=' fixed w-full z-10  bottom-0 bg-white p-3 '>
-        <RidePop setRidePopupPanel={setRidePopupPanel} setConfirmRidePopupPanel={setConfirmRidePopupPanel}/>
+        <RidePop 
+            ride={ride}
+            setRidePopupPanel={setRidePopupPanel} 
+            setConfirmRidePopupPanel={setConfirmRidePopupPanel}/>
       </div>
         <div ref={ConfirmridePopupPanelRef} className=' fixed w-full z-10  bottom-0 bg-white p-3 '>
         <ConfirmRidePop setRidePopupPanel={setRidePopupPanel} setConfirmRidePopupPanel={setConfirmRidePopupPanel}/>
