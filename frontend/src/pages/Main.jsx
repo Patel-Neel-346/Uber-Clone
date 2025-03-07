@@ -28,6 +28,10 @@ const Main = () => {
   const [fare,setFare]=React.useState({});
   const [vehicleType,setVehicleType]=React.useState(null);
 
+  //set ride data that coming from Captain
+  const [ride,setRide]=React.useState(null)
+
+
   const panelRef = React.useRef(null);
   const vechiclePanelRef = React.useRef(null);
   const confirmedRideRef = React.useRef(null);
@@ -50,7 +54,7 @@ const Main = () => {
 
     setLookingForRider(false)
     setWaitingForDriver(true)
-    // setRide(ride)
+    setRide(ride)
     console.log(ride)
 })
 
