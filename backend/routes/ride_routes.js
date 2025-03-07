@@ -1,8 +1,8 @@
 const express=require('express');
 const router=express.Router();
 const {body,query}=require('express-validator');
-const { createRide, getFareController } = require('../controllers/ride_controller');
-const { authUser } = require('../middlewares/user_middleware');
+const { createRide, getFareController, confirmRide } = require('../controllers/ride_controller');
+const { authUser, authCaptain } = require('../middlewares/user_middleware');
 
 
 router.post('/create',authUser,[
@@ -18,6 +18,13 @@ router.get('/get-fare',
     query('destination').isString().isLength({min:3}).withMessage('Invalid Destination Address'),
     getFareController
 
+)
+
+router.post('/confrim',
+    authCaptain,
+    body('rideId').isMongoId().withMessage('Invalid Ride Id'),
+    confirmRide
+    
 )
 
 module.exports = router;

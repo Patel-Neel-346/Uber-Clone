@@ -70,3 +70,56 @@ module.exports.CreateRide=async({
 };
 
 
+
+// module.exports.confirmRide=async({
+//     rideId,
+//     captain
+// })=>{
+//     if(!rideId){
+//         throw new Error('Ride Id is Requierd!');
+//     }
+
+//     await RideModel.findOneAndUpdate({
+//         _id:rideId
+//     },{
+//         status:'accepted',
+//         captain:captain._id
+//     })
+
+//     const ride=await RideModel.findOne({
+//         _id:ride
+//     }).populate('User');
+
+//     console.log(ride)
+
+//     if(!ride){
+//         throw new Error('Ride Not Found!');
+//     }
+//     return ride;
+// }
+module.exports.confirmRide=async({
+    rideId,
+    captain
+})=>{
+    if(!rideId){
+        throw new Error('Ride Id is Requierd!');
+    }
+
+    await RideModel.findOneAndUpdate({
+        _id:rideId
+    },{
+        status:'accepted',
+        captain:captain._id
+    })
+
+    const ride=await RideModel.findOne({
+        _id:rideId
+    }).populate('user').populate('captain');
+
+    console.log(ride)
+
+    if(!ride){
+        throw new Error('Ride Not Found!');
+    }
+    return ride;
+}

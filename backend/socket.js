@@ -48,6 +48,8 @@ function initialzeSocket(server){
     });
 }
 
+
+
 function sendMessageToSocketId(socketId,messageObject){
     console.log(`sending message to ${socketId}`,messageObject)
     if(io){

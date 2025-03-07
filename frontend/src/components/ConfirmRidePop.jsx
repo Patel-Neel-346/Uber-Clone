@@ -61,7 +61,7 @@ const ConfirmRidePop = (props) => {
                 <button onClick={() => {
                     props.setConfirmRidePopupPanel(false)
                     props.setRidePopupPanel(false)
-
+                    props.confirmRide()
                 }} className='w-full mt-2 bg-red-600 text-lg text-white font-semibold p-3 rounded-lg'>Cancel</button>
 
             </form>

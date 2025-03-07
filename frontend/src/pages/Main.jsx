@@ -44,6 +44,16 @@ const Main = () => {
     socket.emit("join",{userType:'user',userId:userData.user._id})
   },[userData])
 
+ 
+  socket.on('ride-confirmed', ride => {
+
+
+    // 
+    setWaitingForDriver(true)
+    // setRide(ride)
+    console.log(ride)
+})
+
 
   const sumbitHandler = (e) => {
     e.preventDefault();

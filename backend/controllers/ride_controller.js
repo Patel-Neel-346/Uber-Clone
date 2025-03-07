@@ -62,3 +62,26 @@ module.exports.getFareController=async(req,res)=>{
         return res.status(500).json({message:error.message})
     }
 }
+
+
+module.exports.confirmRide=async(req,res)=>{
+    const error=validationResult(req);
+    if(!error.isEmpty()){
+        return res.status(400).json({error:error.array()});
+    }
+
+    const {rideId}=req.body;
+
+    try{
+        const ride=await rideService.confirmRide({rideId,captain:req.captain});
+
+        sendMessageToSocketId(ride.user.socketId,{
+            event:'ride-confirmed',
+            data:ride
+        })
+        return res.status(200).json(ride);
+    }catch(error){
+        console.log(error)
+        return res.status(500).json({message:error.message})
+    }
+}

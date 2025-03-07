@@ -7,6 +7,8 @@ import gsap from 'gsap'
 import ConfirmRidePop from '../components/ConfirmRidePop'
 import { CaptainDataContext } from '../context/CaptainContext'
 import { SocketContext } from '../context/SocketContext'
+import { SERVER_URL } from '../App'
+import axios from 'axios'
 const CaptainHome = () => {
   const [ridePopupPanel, setRidePopupPanel] = React.useState(false)
   const [ConfirmridePopupPanel, setConfirmRidePopupPanel] = React.useState(false)
@@ -51,6 +53,22 @@ const CaptainHome = () => {
     setRidePopupPanel(true)
   })
 
+  const confirmRide=async()=>{
+    console.log('confrimRide Call here')
+    const respones=await axios.post(`${SERVER_URL}/api/ride/confrim`,{
+      rideId:ride._id,
+      captainId:captain._id
+    },{
+      headers:{
+        Authorization:`Bearer ${localStorage.getItem('token')}`
+        
+      }
+    })
+    setRidePopupPanel(false)
+    setConfirmRidePopupPanel(true)
+    console.log(respones)
+  }
+
   useGSAP(function () {
     if (ridePopupPanel) {
       gsap.to(ridePopupPanelRef.current, { translateY: '0%' })
@@ -86,10 +104,14 @@ const CaptainHome = () => {
         <RidePop 
             ride={ride}
             setRidePopupPanel={setRidePopupPanel} 
-            setConfirmRidePopupPanel={setConfirmRidePopupPanel}/>
+            setConfirmRidePopupPanel={setConfirmRidePopupPanel}
+            confirmRide={confirmRide}/>
       </div>
         <div ref={ConfirmridePopupPanelRef} className=' fixed w-full z-10  bottom-0 bg-white p-3 '>
-        <ConfirmRidePop setRidePopupPanel={setRidePopupPanel} setConfirmRidePopupPanel={setConfirmRidePopupPanel}/>
+        <ConfirmRidePop 
+        setRidePopupPanel={setRidePopupPanel} 
+        setConfirmRidePopupPanel={setConfirmRidePopupPanel}
+        confirmRide={confirmRide}/>
       </div>
     </div>
   )
