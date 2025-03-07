@@ -114,7 +114,7 @@ module.exports.confirmRide=async({
 
     const ride=await RideModel.findOne({
         _id:rideId
-    }).populate('user').populate('captain');
+    }).populate('user').populate('captain').select('+otp');
 
     console.log(ride)
 

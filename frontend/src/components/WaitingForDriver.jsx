@@ -1,6 +1,6 @@
 import React from 'react'
 
-const WaitingForDriver = () => {
+const WaitingForDriver = (props) => {
   return (
     <div>
     <h5 className='p-1 text-center w-[93%] absolute top-0' onClick={() => {
@@ -10,10 +10,10 @@ const WaitingForDriver = () => {
     <div className='flex items-center justify-between'>
       <img className='h-12' src="https://swyft.pl/wp-content/uploads/2023/05/how-many-people-can-a-uberx-take.jpg" alt="" />
       <div className='text-right'>
-        <h2 className='text-lg font-medium capitalize'>{props.ride?.captain.fullname.firstname}</h2>
+        <h2 className='text-lg font-medium capitalize'>{props.ride?.captain.fullname.firstname} {props.ride?.captain.fullname.lastname}</h2>
         {/* <h2 className='text-lg font-medium capitalize'>John Doe</h2> */}
         <h4 className='text-xl font-semibold -mt-1 -mb-1'>{props.ride?.captain.vehicle.plate}</h4>
-        <h4 className='text-xl font-semibold -mt-1 -mb-1'>MH 12 1234</h4>
+        {/* <h4 className='text-xl font-semibold -mt-1 -mb-1'>MH 12 1234</h4> */}
         <p className='text-sm text-gray-600'>Maruti Suzuki Alto</p>
         <h1 className='text-lg font-semibold'>  {props.ride?.otp} </h1>
         {/* <h1 className='text-lg font-semibold'>  1234 </h1> */}
