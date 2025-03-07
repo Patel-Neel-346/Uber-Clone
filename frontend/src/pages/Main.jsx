@@ -261,7 +261,9 @@ const Main = () => {
       </div>
 
       <div ref={waitingForDriverRef} className=' fixed w-full z-10 bottom-0 translate-y-full bg-white p-3 '>
-        <WaitingForDriver setWaitingForDriver={setWaitingForDriver} />
+        <WaitingForDriver 
+        ride={ride}
+        setWaitingForDriver={setWaitingForDriver} />
       </div>
     </div>
   )
