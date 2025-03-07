@@ -48,7 +48,7 @@ const Main = () => {
   socket.on('ride-confirmed', ride => {
 
 
-    // 
+    setLookingForRider(false)
     setWaitingForDriver(true)
     // setRide(ride)
     console.log(ride)
