@@ -1,19 +1,17 @@
 import React, { useRef, useState } from 'react'
-import CaptainDetails from '../components/CaptainDetails'
-import RidePop from '../components/RidePop'
 import { Link, useLocation } from 'react-router-dom'
+import FinishRide from '../components/FinishRide'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
-import FinishRide from '../components/FinishRide'
 import LiveTracking from '../components/LiveTracking'
 
 const CaptainRiding = () => {
- 
+
     const [ finishRidePanel, setFinishRidePanel ] = useState(false)
     const finishRidePanelRef = useRef(null)
     const location = useLocation()
     const rideData = location.state?.ride
-    
+
 
 
     useGSAP(function () {
@@ -58,8 +56,6 @@ const CaptainRiding = () => {
 
             <div className='h-screen fixed w-screen top-0 z-[-1]'>
                 <LiveTracking />
-                        {/* <img className=' h-full w-full object-cover' src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="" /> */}
-
             </div>
 
         </div>

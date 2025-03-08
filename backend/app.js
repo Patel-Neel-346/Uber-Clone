@@ -1,30 +1,35 @@
-const dotenv=require('dotenv')
-dotenv.config()
-const express=require('express')
-const cors=require('cors')
-const connectDB=require('./db/db.js')
-const userRouter = require('./routes/user_routers.js')
-const cookieParser = require('cookie-parser')
-const captainRoute = require('./routes/captain_route.js')
-const Maprouter = require('./routes/maps_routes.js')
-const rideRouter = require('./routes/ride_routes.js')
-const app=express()
-connectDB()
+const dotenv = require('dotenv');
+dotenv.config();
+const express = require('express');
+const cors = require('cors');
+const app = express();
+const cookieParser = require('cookie-parser');
+const connectToDb = require('./db/db');
+const userRoutes = require('./routes/user.routes');
+const captainRoutes = require('./routes/captain.routes');
+const mapsRoutes = require('./routes/maps.routes');
+const rideRoutes = require('./routes/ride.routes');
 
-app.use(cors())
-app.use(express.json())
-app.use(cookieParser())
+connectToDb();
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 
-app.use('/api/user',userRouter)
-app.use('/api/captain',captainRoute)
-app.use('/api/maps',Maprouter)
-app.use('/api/ride',rideRouter)
 
-app.get('/',(req,res)=>{
-    res.send('API is running...')
+app.get('/', (req, res) => {
+    res.send('Hello World');
 });
 
-module.exports=app;
+app.use('/users', userRoutes);
+app.use('/captains', captainRoutes);
+app.use('/maps', mapsRoutes);
+app.use('/rides', rideRoutes);
 
+
+
+
+module.exports = app;
 

@@ -1,11 +1,10 @@
 
 import React, { createContext, useEffect } from 'react';
 import { io } from 'socket.io-client';
-import { SERVER_URL } from '../App';
 
 export const SocketContext = createContext();
 
-const socket = io(`${import.meta.env.VITE_API_URL}`) // Replace with your server URL
+const socket = io(`${import.meta.env.VITE_BASE_URL}`); // Replace with your server URL
 
 const SocketProvider = ({ children }) => {
     useEffect(() => {
