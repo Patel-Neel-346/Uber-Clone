@@ -9,6 +9,7 @@ import { CaptainDataContext } from '../context/CaptainContext'
 import { SocketContext } from '../context/SocketContext'
 import { SERVER_URL } from '../App'
 import axios from 'axios'
+import LiveTracking from '../components/LiveTracking'
 const CaptainHome = () => {
   const [ridePopupPanel, setRidePopupPanel] = React.useState(false)
   const [ConfirmridePopupPanel, setConfirmRidePopupPanel] = React.useState(false)
@@ -94,7 +95,8 @@ const CaptainHome = () => {
       </div>
       <div className='h-3/5'>
         {/* <LiveTracking /> */}
-        <img className=' h-full w-full object-cover' src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="" />
+        <LiveTracking />
+        {/* <img className=' h-full w-full object-cover' src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="" /> */}
 
       </div>
       <div className='h-2/5 p-6 '>

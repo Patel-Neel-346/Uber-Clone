@@ -1,12 +1,33 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { SERVER_URL } from '../App'
+import axios from 'axios'
 
 const ConfirmRidePop = (props) => {
 
     const [otp, setOtp] = React.useState('')
-    const ConfirmOtp = (e) => {
+    const navigate=useNavigate()
+    const ConfirmOtp =async (e) => {
         e.preventDefault()
         console.log(otp)
+
+        const response = await axios.get(`${SERVER_URL}/api/ride/get-ride`, {
+            params: {
+                rideId: props.ride._id,
+                otp: otp
+            },
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+
+        console.log("ride Stareted SuccessFully",response)
+
+        if (response.status === 200) {
+            props.setConfirmRidePopupPanel(false)
+            props.setRidePopupPanel(false)
+            navigate('/captain-riding', { state: { ride: props.ride } })
+        }
     
     }
   return (
@@ -56,8 +77,7 @@ const ConfirmRidePop = (props) => {
             <form onSubmit={ConfirmOtp} className='flex flex-col gap-3'>
                 <h3 className='text-lg font-semibold'>Enter OTP</h3>
                 <input value={otp} onChange={(e) => setOtp(e.target.value)} type="text" className='bg-[#eee] px-6 py-4 font-mono text-lg rounded-lg w-full mt-3' placeholder='Enter OTP' />
-
-             <Link to={'/captain-riding'} ><button className='w-full mt-5 text-lg flex justify-center bg-green-600 text-white font-semibold p-3 rounded-lg'>Confirm</button></Link>   
+                <button className='w-full mt-5 text-lg flex justify-center bg-green-600 text-white font-semibold p-3 rounded-lg'>Confirm</button>
                 <button onClick={() => {
                     props.setConfirmRidePopupPanel(false)
                     props.setRidePopupPanel(false)

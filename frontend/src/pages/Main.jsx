@@ -12,6 +12,8 @@ import axios from 'axios'
 import { SERVER_URL } from '../App'
 import { UserDataContext } from '../context/userContext'
 import { SocketContext } from '../context/SocketContext'
+import { useNavigate } from 'react-router-dom'
+import LiveTracking from '../components/LiveTracking'
 const Main = () => {
   const [pickUp, setPickUp] = React.useState('');
   const [destination, setDestination] = React.useState('');
@@ -41,7 +43,7 @@ const Main = () => {
 
   const {userData}=useContext(UserDataContext)
   const {socket}=useContext(SocketContext)
-
+  const navigate=useNavigate()
 
   useEffect(()=>{
     console.log(userData)
@@ -58,6 +60,13 @@ const Main = () => {
     console.log(ride)
 })
 
+
+
+socket.on('ride-started', ride => {
+  console.log("ride")
+  setWaitingForDriver(false)
+  navigate('/riding', { state: { ride } }) // Updated navigate to include ride data
+})
 
   const sumbitHandler = (e) => {
     e.preventDefault();
@@ -170,7 +179,8 @@ const Main = () => {
 
       <div className=' h-screen w-screen'>
         {/* image for temporary  use */}
-        <img className=' h-full w-full object-cover' src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="" />
+        <LiveTracking />
+        {/* <img className=' h-full w-full object-cover' src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="" /> */}
       </div>
       <div className='flex flex-col justify-end  h-screen absolute bottom-0 w-full '>
         <div className='h-[30%] bg-white p-5  relative'>
